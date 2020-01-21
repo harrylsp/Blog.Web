@@ -1,0 +1,155 @@
+﻿
+@using Blog.Model
+
+@{
+    ViewBag.Title = "文章专栏";
+}
+
+@section css{
+    <link href="~/css/homePage/article.css" rel="stylesheet" />
+
+    <style type="text/css">
+    </style>
+
+}
+
+<div class="blog-container">
+    @*站点导航路径*@
+    <div class="layui-elem-quote sitemap layui-breadcrumb shadow" lay-separator=">">
+        <a href="/" title="网站首页">网站首页</a>
+        <a><cite>文章专栏</cite></a>
+        @{
+            //搜索
+            if (true)
+            {
+                <a><cite>搜索文章</cite></a>
+            }
+        }
+    </div>
+    <div class="blog-main">
+        @*左边栏目*@
+        <div class="blog-main-left">
+            @{
+                //未搜索到相关文章
+                if (true)
+                {
+                    <div class="shadow" style="text-align:center;font-size:16px;padding:40px 15px;background:#fff;margin-bottom:15px;">
+                        未搜索到与【<span style="color:#FF5722;">keywords</span>】有关的文章，随便看看吧！
+                    </div>
+                }
+            }
+
+            @*左边文章列表 首次默认加载 10 条记录*@
+            @{
+                IList<ArticleView> blogList = ViewBag.BlogList;
+
+                var blog = blogList[0];
+                blog.Remark = "https://i02piccdn.sogoucdn.com/bac00d4daadcd81a";
+
+                var tipsList = ViewBag.TipsList;
+
+                foreach (var xx in tipsList)
+                {
+                    <div class="article shadow">
+                        @*文章缩略图(封面)*@
+                        <div class="article-left">
+                            <img src="@blog.Remark" alt="@blog.Title" />
+                        </div>
+                        @*文章标题和摘要*@
+                        <div class="article-right">
+                            @*标题*@
+                            <div class="article-title">
+                                @if (blog.Status == EStatus.正常)
+                                {
+                                    <i class="icon-stick">顶</i>
+                                }
+                                <a href="/Article/Detail/@blog.Id">@blog.Title</a>
+                            </div>
+                            @*摘要*@
+                            @{
+                                <div class="article-abstract">@blog.Content</div>
+                            }
+                        </div>
+                        @*清浮动*@
+                        <div class="clear"></div>
+                        @*文章信息*@
+                        <div class=" article-footer">
+                            @*发布日期*@
+                            <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;@blog.CreateTime</span>
+                            @*发布人*@
+                            <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;@blog.Author</span>
+                            @*文章类别*@
+                            <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">@blog.Category</a></span>
+                            @*文章阅读量*@
+                            <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;@blog.Status</span>
+                            @*文章评论数*@
+                            <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;@blog.Status</span>
+                        </div>
+                    </div>
+                }
+
+            }
+
+        </div>
+
+        @*右边小栏目*@
+        <div class="blog-main-right">
+            @*搜索*@
+            <div class="blog-search">
+                <form class="layui-form-item">
+                    <div class="search-keywords shadow">
+                        <input type="text" name="keywords" lay-verify="required" placeholder="请输入关键词搜索" autocomplete="off" class="layui-input" />
+                    </div>
+                    <div class="search-submit shadow">
+                        <a class="search-btn" lay-submit="formSearch" lay-filter="formSearch"><i class="fa fa-search"></i></a>
+                    </div>
+                </form>
+            </div>
+            @*分类导航*@
+            <div class="article-category shadow">
+                <div class="article-category-title">分类导航</div>
+                <a href="javascript:layer.msg(&#39;切换到相应的分类&#39;)">ASP.NET MVC</a>
+                <a href="javascript:layer.msg(&#39;切换到相应的分类&#39;)">SQL SERVER</a>
+                <a href="javascript:layer.msg(&#39;切换到相应的分类&#39;)">Entity Framwork</a>
+                <a href="javascript:layer.msg(&#39;切换到相应的分类&#39;)">Web 前端</a>
+                <a href="javascript:layer.msg(&#39;切换到相应的分类&#39;)">杂文随笔</a>
+                <a href="javascript:layer.msg(&#39;切换到相应的分类&#39;)">C#基础</a>
+                <div class="clear"></div>
+            </div>
+            @*作者推荐*@
+            <div class="blog-module shadow">
+                <div class="blog-module-title">作者推荐</div>
+                <ul class="fa-ul blog-module-ul">
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="/Article/2">Web安全</a></li>
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="/Article/2">Web安全</a></li>
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="/Article/2">Web安全</a></li>
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="/Article/2">Web安全</a></li>
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="/Article/2">Web安全</a></li>
+                </ul>
+            </div>
+            @*随便看看*@
+            <div class="blog-module shadow">
+                <div class="blog-module-title">随便看看</div>
+                <ul class="fa-ul blog-module-ul">
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="/Article/2">一步步制作时光轴</a></li>
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="/Article/2">一步步制作时光轴</a></li>
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="/Article/2">一步步制作时光轴</a></li>
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="/Article/2">一步步制作时光轴</a></li>
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="/Article/2">一步步制作时光轴</a></li>
+                </ul>
+            </div>
+            @*右边悬浮 平板或手机设备显示 的 分类导航*@
+            <div class="category-toggle">
+                <i class="fa fa-chevron-left"></i>
+            </div>
+        </div>
+
+        @*清浮动*@
+        <div class="clear"></div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/js/homePage/article.js"></script>
+}
+

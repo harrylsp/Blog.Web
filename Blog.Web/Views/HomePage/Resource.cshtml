@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "资源分享";
+}
+
+@section css{
+    <link href="~/css/homePage/resource.css" rel="stylesheet" />
+
+    <style type="text/css">
+
+    </style>
+}
+
+
+<div class="blog-container">
+    @*站点导航路径*@
+    <div class="layui-elem-quote sitemap layui-breadcrumb shadow" lay-separator=">">
+        <a href="/" title="网站首页">网站首页</a>
+        <a><cite>资源分享</cite></a>
+    </div>
+    <div class="blog-main">
+        <div class="blog-main">
+            @*资源类别*@
+            <div class="child-nav shadow">
+                <span class="child-nav-btn child-nav-btn-this">全部</span>
+                <span class="child-nav-btn">源码</span>
+                <span class="child-nav-btn">工具</span>
+                <span class="child-nav-btn">电子书</span>
+            </div>
+            @*资源展示*@
+            <div class="resource-main">
+                <div class="resource shadow">
+                    <div class="resource-cover">
+                        <a href="javasccript:layer.msg(&#39;这里天演示地址&#39;)" target="_blank">
+                            <img src="~/images/face/28.gif" alt="时光轴" />
+                        </a>
+                    </div>
+                    <h1 class="resource-title">
+                        <a href="javascript:layer.msg(&#39;这里填演示地址&#39;)" target="_blank">时光轴</a>
+                    </h1>
+                    <p class="resource-abstract">本博客使用的时光轴源码，手工打造</p>
+                    <div class="resource-info">
+                        <span class="category"><a href="javascript:layer.msg(&#39;这里跳转到对应分类&#39;)" target="_blank"><i class="fa fa-tags fa-fw"></i>&nbsp;源码</a></span>
+                        <span class="author"><i class="fa fa-user fa-fw"></i>lsp</span>
+                    </div>
+                    <div class="resource-footer">
+                        <a class="layui-btn layui-btn-sm layui-btn-primary" href="javascript:layer.msg(&#39;这里填演示地址&#39;)" target="_blank"><i class="fa fa-eye fa-fw"></i>演示</a>
+                        <a class="layui-btn layui-btn-sm layui-btn-primary" href="javascript:layer.msg(&#39;这里填演示地址&#39;)" target="_blank"><i class="fa fa-download fa-fw"></i>下载</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{}
+

@@ -1,0 +1,170 @@
+﻿@{
+    ViewBag.Title = "网站首页";
+}
+
+@using Blog.Model
+
+@section css{
+    <link href="~/css/homePage/index.css" rel="stylesheet" />
+}
+
+@*canvas*@
+<canvas id="canvas-banner" style="background: #393D49;"></canvas>
+@*为了及时效果需要立即设置canvas宽高*@
+<script type="text/javascript">
+    var canvas = document.getElementById('canvas-banner');
+    canvas.width = window.document.body.clientHeight - 10; // 减去滚动条的宽度
+    if (screen.width >= 992) {
+        canvas.height = window.innerHeight * 1 / 3;
+    } else {
+        canvas.height = window.innerHeight * 2 / 7;
+    }
+</script>
+<div class="blog-container">
+    <div class="blog-main">
+        @*网站公告提示*@
+        <div class="home-tips shadow">
+            <i style="float: left;line-height:20px;" class=" fa fa-volume-up"></i>
+            <div class="home-tips-container">
+                @{
+                    var tipsList = ViewBag.TipsList;
+                    foreach (Tips item in tipsList)
+                    {
+                        if (string.IsNullOrWhiteSpace(item.Url))
+                        {
+                            <span style="color: @item.Color">@item.Text</span>
+                        }
+                        else
+                        {
+                            <span style="color: @item.Color">@item.Text <a href='@item.Url' target='_blank' style='color:#01AAED'>@item.UrlTips</a></span>
+                        }
+                    }
+                }
+            </div>
+        </div>
+
+        @*左边文章列表 首次默认加载 10 条记录*@
+        <div class="blog-main-left">
+            @{
+                List<ArticleView> blogList = ViewBag.BlogList;
+
+                var blog = blogList[0];
+                blog.Remark = "https://i02piccdn.sogoucdn.com/bac00d4daadcd81a";
+
+                foreach (var xx in tipsList)
+                {
+                    <div class="article shadow">
+                        @*文章缩略图(封面)*@
+                        <div class="article-left">
+                            <img src="@blog.Remark" alt="@blog.Title" />
+                        </div>
+                        @*文章标题和摘要*@
+                        <div class="article-right">
+                            @*标题*@
+                            <div class="article-title">
+                                @if (blog.Status == EStatus.正常) // 是否置顶
+                                {
+                                    <i class="icon-stick">顶</i>
+                                }
+                                <a href="/Detail/@blog.Id">@blog.Title</a>
+                            </div>
+                            @*摘要*@
+                            @{
+                                //string replaceContent = Tools.ReplaceHtmlTag(item.bcontent);
+                                //string digest = replaceContent.Length > 100 ? replaceContent.Substring(0, 200) : replaceContent;
+                                <div class="article-abstract">@blog.Content</div>
+                            }
+                        </div>
+                        @*清浮动*@
+                        <div class="clear"></div>
+                        @*文章信息*@
+                        <div class=" article-footer">
+                            @*发布日期*@
+                            <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;@blog.CreateTime</span>
+                            @*发布人*@
+                            <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;@blog.Author</span>
+                            @*文章类别*@
+                            <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">@blog.Category</a></span>
+                            @*文章阅读量*@
+                            <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;@blog.Status</span>
+                            @*文章评论数*@
+                            <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;@blog.Status</span>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+
+        @*右边小栏目*@
+        <div class="blog-main-right">
+            <div class="blogerinfo shadow">
+                <div class="blogerinfo-figure">
+                    <img src="~/images/face/30.gif" alt="lsp" />
+                </div>
+                <p class="blogerinfo-nickname">lsp</p>
+                <p class="blogerinfo-introduce">还是不知道写什么</p>
+                <p class="blogerinfo-location"><i class="fa fa-location-arrow"></i>&nbsp;广东 - 广州</p>
+                <hr />
+                <div class=" blogerinfo-contact">
+                    <a target="_blank" title="QQ交流" href="javascript:layer.msg('启动QQ会话窗口')"><i class="fa fa-qq fa-2x"></i></a>
+                    <a target="_blank" title="给我写信" href="javascript:layer.msg('启动邮我窗口')"><i class="fa fa-envelope fa-2x"></i></a>
+                    <a target="_blank" title="新浪微博" href="javascript:layer.msg('转到你的微博主页')"><i class="fa fa-weibo fa-2x"></i></a>
+                    <a target="_blank" title="码云" href="javascript:layer.msg('转到你的github主页')"><i class="fa fa-git fa-2x"></i></a>
+                </div>
+            </div>
+
+            @*占位*@
+            <div></div>
+
+            @*热文排行*@
+            <div class="blog-module shadow">
+                <div class="blog-module-title">热文排行</div>
+                <ul class="fa-ul blog-module-ul">
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="/Detail/1">Web安全之跨站请求伪造</a></li>
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="/Detail/2">常用正则表达式</a></li>
+                </ul>
+            </div>
+
+            @*最近分享*@
+            <div class="blog-module shadow">
+                <div class="blog-module-title">最近分享</div>
+                <ul class="fa-ul blog-module-ul">
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="http://pan.baidu.com/s/1c1BJ6QC" target="_blank">Canvas</a></li>
+                    <li><i class="fa-li fa fa-hand-o-right"></i><a href="https://pan.baidu.com/s/1mit2aiW" target="_blank">时光轴</a></li>
+                </ul>
+            </div>
+
+            @*一路走来*@
+            <div class=" blog-module shadow">
+                <div class="blog-module-title">一路走来</div>
+                <dl class=" footprint">
+                    <dt>2018年1月31日</dt>
+                    <dd>新增留言回复功能</dd>
+                    <dt>2018年1月31日</dt>
+                    <dd>新增文字搜索功能</dd>
+                    <dt>2018年1月31日</dt>
+                    <dd>新增管家提醒功能</dd>
+                </dl>
+            </div>
+
+            @*友情链接*@
+            <div class="blog-module shadow">
+                <div class=" blog-module-title">友情链接</div>
+                <ul class="blogroll">
+                    <li><a target="_blank" href="http://www.layui.com/" title="Layui">Layui</a></li>
+                    <li><a target="_blank" href="http://www.pagemark.cn/" title="页签">页签</a></li>
+                </ul>
+            </div>
+        </div>
+
+        @*清浮动*@
+        <div class="clear"></div>
+
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/js/homePage/index.js"></script>
+}

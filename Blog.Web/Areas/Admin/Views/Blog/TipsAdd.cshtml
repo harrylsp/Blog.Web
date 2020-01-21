@@ -1,0 +1,129 @@
+﻿@*指定视图期望的视图模板的模型为 Category 类型*@
+@model Blog.Model.Tips
+
+@{
+    ViewBag.Title = "博客公告";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutEdit.cshtml";
+}
+
+@section css{ 
+    <style>
+        
+    </style>
+}
+
+@*<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>新增/编辑分类</legend>
+    </fieldset>*@
+
+<form class="layui-form" asp-action="TipsAdd" data-ajax-success="onSuccess" data-ajax="true" data-ajax-method="POST">
+    <div class="layui-form-item">
+        <label class="layui-form-label">公告内容</label>
+        <div class="layui-input-inline" style="width:65%;">
+            @*<input type="text" asp-for="Text" required lay-verify="required" placeholder="请输入类别显示名称" autocomplete="off" class="layui-input" />*@
+            <textarea asp-for="Text" name="Text" required lay-verify="required" placeholder="请输入公告内容" class="layui-textarea"></textarea>
+        </div>
+        <div class="layui-inline">
+            <div id="textColor"></div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">跳转链接</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="Url" name="Url" placeholder="请输入链接内容" class="layui-input" />
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">链接提示语</label>
+        <div class="layui-input-block">
+            <input type="text" asp-for="UrlTips" name="UrlTips" placeholder="请输入链接提示语" class="layui-input" />
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            @*这是button控件，会提交整个表单*@
+            <button class="layui-btn" lay-submit lay-filter="CategoryAdd">保存</button>
+            @*<button type="reset" class="layui-btn layui-btn-primary">重置</button>*@
+            <input type="button" id="btnClose" class="layui-btn layui-btn-primary" value="关闭" />
+        </div>
+    </div>
+
+    @Html.HiddenFor(c => c.Color);
+
+    @Html.HiddenFor(c => c.Id)
+    @*要放到form控件里*@
+    @*@Html.AntiForgeryToken()*@ @*这个验证在所有的Form表中会自动生成*@
+</form>
+
+@section scripts{
+    <script>
+        layui.use(['colorpicker', 'layer'], function () {
+            var colorpicker = layui.colorpicker;
+            var layer = layui.layer;
+
+            colorpicker.render({
+                elem: '#textColor',
+                change: function (color) {
+                    //layer.tips('选择了：' + color, this.elem, {
+                    //    tips: 1
+                    //});
+
+                    // 改变公告内容 的颜色
+                    $("#Text").css('color', color);
+
+                    console.log(this.elem);
+                    
+                },
+                done: function (color) { 
+
+                    console.log('color=>' + color);
+
+                    if (color == '' || color == null || color == undefined) {
+                        color = '#000';
+                    }
+
+                    // 赋值
+                    $("#Color").val(color);
+
+                    layer.tips('选择了：' + color, this.elem, {
+                        tips: 1
+                    });
+
+                }
+            });
+
+            layer.tips('这是颜色选择器', $('#textColor'), {
+                tips: [2, '#0deb39']
+            });
+        });
+    </script>
+    <script>
+
+        var onSuccess = function (res) {
+
+            // 模拟 点击 弹窗的iframe 右上角的 关闭 按钮，为了触发layer.open 的回调事件，从而刷新表格数据
+            $('.layui-layer-close,.layui-layer-close*', window.parent.document)[0].click()
+
+            console.log('页面提交成功返回=>' + res);
+
+            //注意：parent 是 JS 自带的全局对象，可用于操作父页面
+            //var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+            //console.log('父页面窗口索引=>' + index);
+
+            // 关闭当前iframe
+            //parent.layer.close(index);
+
+        }
+
+        $("#btnClose").on('click', function () {
+
+            var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+            // 关闭当前iframe
+            parent.layer.close(index);
+        });
+
+    </script>
+}

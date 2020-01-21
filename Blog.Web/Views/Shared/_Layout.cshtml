@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>@ViewBag.Title - 我的 博客</title>
+    @*一款强大的预设css3动画库*@
+    <link href="~/css/animate.min.css" rel="stylesheet" />
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/js/modernizr-2.6.2.js"></script>
+    <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    @*博客前台全局样式*@
+    <link href="~/css/global.css" rel="stylesheet" />
+    @*非常有意思的一个js，可以实时的监听页面的加载数据，并且能够定制加载条，最重要的一点，它还可以监测到ajax的调用并且出现加载条提示*@
+    <script data-pace-options='{ "ajax": false, "eventLag": false}' src="~/js/pace.min.js"></script>
+    @*<script data-pace-options='{ "ajax": false ,"eventLag": false}' src="http://www.lyblogs.cn/Scripts/pace.min.js"></script>*@
+    @*百度统计 需注册百度统计账号 d50dba5f6d99898727d589b41b0f8e98 这个字符串是根据个人账号生成的 *@
+    @*<script>
+            var _hmt = _hmt || [];
+            (function () {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?d50dba5f6d99898727d589b41b0f8e98";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>*@
+
+    @RenderSection("css", required: false)
+</head>
+<body>
+    @*导航*@
+    <nav class="blog-nav layui-header">
+        <div class="blog-container">
+            @*QQ互联登录*@
+            <a href="javascript:;" class="blog-user">
+                <i class="fa fa-qq"></i>
+            </a>
+
+            <a href="javascript:;" class="blog-user layui-hide">
+                <img src="~/images/face/11.gif" alt="lsp" title="lsp" />
+            </a>
+            @*Logo*@
+            <a class="blog-logo" href="/">不知道写什么</a>
+            <ul class="layui-nav" lay-filter="nav">
+                <li class="layui-nav-item">
+                    <a href="/"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/Article"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/Resource"><i class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/TimeLine"><i class="fa fa-hourglass-half fa-fw">&nbsp;</i>点点滴滴</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/About"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+                </li>
+            </ul>
+
+            @*手机和平板的导航开关*@
+            <a class="blog-navicon" href="javascript:;">
+                <i class="fa fa-navicon"></i>
+            </a>
+        </div>
+    </nav>
+
+    @*主体内容*@
+    <div class="blog-body">
+        @RenderBody()
+    </div>
+
+    @*底部*@
+    <footer class="blog-footer">
+        <p><span>Copyright</span><span>&copy;</span><span>2018</span><a href="javascript:alert('别瞎点')">不知道写什么</a><span>Design By LSP</span></p>
+        <p><a href="http://www.miibeian.gov.cn/" target="_blank">粤ICP备12345678号-1</a></p>
+    </footer>
+
+    @*侧边导航 手机和平板浏览 或者 浏览器窗口尺寸变到足够小的时候 显示*@
+    <ul class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide" lay-filter="nav">
+        <li class="layui-nav-item">
+            <a href="/"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/Article"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/Resource"><i class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/TimeLine"><i class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/About"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+        </li>
+    </ul>
+
+    @*分享窗体*@
+    <div class="blog-share layui-hide">
+        <div class="blog-share-body">
+            <div style="width: 200px;height: 100%">
+                <div class="bdsharebuttonbox">
+                    <a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                    <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                    <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                    <a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*遮罩*@
+    <div class="blog-mask animated layui-hide"></div>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/layui/layui.js"></script>
+
+
+    <script>
+            //layui.use('element', function () {
+            //    var element = layui.element;
+
+            //    // 导航菜单监听
+            //    element.on('nav(nav)', function (elem) {
+            //        console.log(elem); //得到当前点击的DOM对象
+            //        $(elem).addClass('layui-this');
+            //    });
+            //});
+
+        $(document).ready(function () {
+            //alert("xxx");
+
+            // 设置菜单展开、选中样式
+            var action = '@ViewBag.SelectNav';
+            var selectIndex = -1;
+
+            $('.layui-nav a').each(function (index, element) {
+                //console.log($(this).attr('href'));
+                var menu = $(this).attr('href').replace('/', '');
+                if (menu == action) {
+
+                    selectIndex = index;
+                    // 找到要选中的菜单，结束循环
+                    return false;
+                }
+            });
+            
+            if (selectIndex != -1) {
+                // 去掉之前元素的选中状态
+                $('.layui-nav li').each(function () {
+                    $(this).removeClass('layui-this');
+                });
+
+                $('.layui-nav').find('li:eq(' + selectIndex  + ')').addClass('layui-this');
+
+            } else {  // 默认选中首页
+                // 获取第一个选中项
+                $('.layui-nav').find('li:eq(0)').addClass('layui-this');
+            }
+        });
+    </script>
+    @*博客前台全局脚本*@
+    <script src="~/js/global.js"></script>
+    @*百度自动提交插件*@
+    <script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+        });
+    </script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
